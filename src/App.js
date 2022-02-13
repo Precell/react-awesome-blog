@@ -1,24 +1,35 @@
+import {BrowserRouter, Link, Switch, Route} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/Navbar';
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+import HomePage from './pages/HomePage';
+import PostPage from './pages/PostPage';
 
 function App() {
+  const {theme} = useContext(ThemeContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className={`container ${theme}`}>
+        <Navbar/>
+        <div className='main'>
+          <Switch>
+            <Route path="/post/:postId">
+              <PostPage/>
+            </Route>
+            <Route path="/">
+              <HomePage/>
+            </Route>
+          </Switch>
+         
+        </div>
+        <div className='footer'>
+          Awesome blog, All Rights Reserved
+        </div>
+      </div>
+    </BrowserRouter>
+    
   );
 }
 
